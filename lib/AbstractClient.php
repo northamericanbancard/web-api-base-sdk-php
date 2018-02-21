@@ -34,7 +34,7 @@ abstract class AbstractClient extends Client implements ClientInterface
      * @param string $xApiKey An API key header (usually associated with AWS APIG)
      * @param array  $config  Any Guzzle configuration
      */
-    public function __construct($baseUrl, $xApiKey, array $config = [])
+    public function __construct($baseUrl, $xApiKey = null, array $config = [])
     {
         $this->baseUrl = $baseUrl;
 
