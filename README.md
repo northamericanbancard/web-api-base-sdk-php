@@ -34,7 +34,7 @@ Example Calls:
 
 ```php
 // SignatureV4 defaults to use-east-1, execute-api in the constructor.
-$service = new Client('http://example.com', new SignatureV4(), new Credentials('access_key', 'secret_key'), 'x-api-key', [] /*optional guzzle config*/);
+$service = new AwsApiGatewayClient('http://example.com', new SignatureV4(), new Credentials('access_key', 'secret_key'), 'x-api-key', [] /*optional guzzle config*/);
  
 $service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'])
 $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
@@ -52,7 +52,7 @@ supress exceptions with the intent for you to retrieve error data from the statu
 Example Calls:
 
 ```php
-$service = new Client('http://example.com', 'my.jwt.token', 'x-api-key', [] /*optional guzzle config*/);
+$service = new JwtClient('http://example.com', 'my.jwt.token', 'x-api-key', [] /*optional guzzle config*/);
  
 $service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'])
 $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
