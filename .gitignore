@@ -1,0 +1,17 @@
+#IDE
+.idea/
+
+#composer
+vendor
+
+#PHPUnit
+.coverage
+phpunit.xml
+.php_cs.cache
+
+# Make/Autoconf config
+config.log
+config.status
+configure
+autom4te.cache/
+dockerfilehashes/
