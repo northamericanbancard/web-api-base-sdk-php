@@ -8,7 +8,6 @@
 
 namespace NAB\WebApiBaseSdk;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use NAB\WebApiBaseSdk\ClientInterface;
 use NAB\WebApiBaseSdk\AbstractClient;
