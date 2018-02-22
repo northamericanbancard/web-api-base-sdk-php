@@ -1,6 +1,6 @@
 <?php
 /**
- * Filename:    Client.php
+ * Filename:    SimpleClient.php
  * Created:     21/02/18, at 6:34 PM
  * @author      James Hollenbeck <jhollenbeck@nabancard.com>
  * @copyright   1992-2018 North American Bancard

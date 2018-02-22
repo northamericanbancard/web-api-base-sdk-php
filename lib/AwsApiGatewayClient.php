@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Filename:    Client.php
+ * Filename:    AwsApiGatewayClient.php
  * Created:     1/22/18, at 7:55 PM
  * @author      James Hollenbeck <jhollenbeck@nabancard.com>
  * @copyright   1992-2018 North American Bancard

@@ -1,6 +1,6 @@
 # Web API Base SDK PHP
 
-For use when creating either project specific SDKs or for use in our [AWS API Gateway Generic PHP Bundle](https://github.com/northamericanbancard/apigateway-generic-php-sdk-symfony-bundle).
+For use when creating either project specific SDKs or for use in our [Web API Base SDK Bundle](https://github.com/northamericanbancard/web-api-base-sdk-bundle).
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ Example Calls:
 
 ```php
 // SignatureV4 defaults to use-east-1, execute-api in the constructor.
-$service = new AwsApiGatewayClient('http://example.com', new SignatureV4(), new Credentials('access_key', 'secret_key'), 'x-api-key', [] /*optional guzzle config*/);
+$service = new AwsApiGatewayClient('http://example.com', new SignatureV4(), new Credentials('access_key', 'secret_key'), 'x-api-key'|null, [] /*optional guzzle config*/);
  
 $service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'])
 $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
@@ -52,7 +52,21 @@ supress exceptions with the intent for you to retrieve error data from the statu
 Example Calls:
 
 ```php
-$service = new JwtClient('http://example.com', 'my.jwt.token', 'x-api-key', [] /*optional guzzle config*/);
+$service = new JwtClient('http://example.com', 'my.jwt.token', 'x-api-key'|null, [] /*optional guzzle config*/);
+ 
+$service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'])
+$service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
+```
+
+#### Unsecured Endpoints
+
+1. httpGet(string $url, array $queryParams = [], array $headers = [], $body = null)
+2. httpPost(string $url, array $queryParams = [], array $headers = [], $body = null)
+
+Example Calls:
+
+```php
+$service = new SimpleClient('http://example.com', 'x-api-key'|null, [] /*optional guzzle config*/);
  
 $service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'])
 $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
