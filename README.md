@@ -93,7 +93,7 @@ make phpcs
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/northamericanbancard/apigateway-generic-php-library/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/northamericanbancard/web-api-base-sdk/tags). 
 
 ## License
 
