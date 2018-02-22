@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Filename:    ClientTest.php
+ * Filename:    SimpleClientTest.php
  * Created:     1/22/18, at 8:05 PM
  * @author      James Hollenbeck <jhollenbeck@nabancard.com>
  * @copyright   1992-2018 North American Bancard

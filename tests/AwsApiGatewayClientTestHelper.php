@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Filename:    ClientTestHelper.php
+ * Filename:    AwsApiGatewayClientTestHelper.php
  * Created:     1/22/18, at 8:08 PM
  * @author      James Hollenbeck <jhollenbeck@nabancard.com>
  * @copyright   1992-2018 North American Bancard

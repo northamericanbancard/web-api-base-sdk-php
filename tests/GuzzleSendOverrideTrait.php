@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Filename:    GuzzleSendOverrideTrait.php
+ * Created:     1/22/18, at 8:08 PM
+ * @author      James Hollenbeck <jhollenbeck@nabancard.com>
+ * @copyright   1992-2018 North American Bancard
+ */
+
 namespace NAB\Tests;
 
 use Psr\Http\Message\RequestInterface;
