@@ -54,6 +54,18 @@ abstract class AbstractClient extends Client implements ClientInterface
     }
 
     /**
+     * Helper to create the final request object.
+     *
+     * @param string $method   The HTTP Method to use in the Request
+     * @param string $endpoint The final endpoint (including the query params)
+     * @param array  $headers  An array of headers to send
+     * @param string $body     The body of the Request
+     *
+     * @return Request
+     */
+    abstract protected function createRequest($method, $endpoint, array $headers, $body);
+
+    /**
      * Wrapper around Guzzle's sending process of a post request.
      *
      * @param string $path       The path to send the request to (no query params)
@@ -67,18 +79,6 @@ abstract class AbstractClient extends Client implements ClientInterface
     {
         return $this->doSendRequest(self::HTTP_METHOD_POST, $path, $queryParams, $headers, $body);
     }
-
-    /**
-     * Helper to create the final request object.
-     *
-     * @param string $method   The HTTP Method to use in the Request
-     * @param string $endpoint The final endpoint (including the query params)
-     * @param array  $headers  An array of headers to send
-     * @param string $body     The body of the Request
-     *
-     * @return Request
-     */
-    abstract protected function createRequest($method, $endpoint, array $headers, $body);
 
     /**
      * Wrapper around Guzzle's sending process of a get request.

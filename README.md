@@ -15,6 +15,9 @@ access key and secret key. If required, you should also obtain the `x-api-key` h
 
 If you are accessing api endpoints that are secured via JWT, then ensure you obtain the proper JWT for your project.
 
+*_NOTE_*: Regardless if you are using AWS as your client, you will still have the ability to utilize the `x-api-key` header
+to supply an API key, if you wish.
+
 ### Installing
 
 #### Composer
@@ -45,6 +48,8 @@ $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' =>
 supress exceptions with the intent for you to retrieve error data from the status code and response body.
 
 #### JWT Secured Endpoints
+
+*_Note_*: JWT Tokens will exist in each request under the header `Authorization: Bearer` as `Authorization: Bearer <MY_TOKEN>`
 
 1. httpGet(string $url, array $queryParams = [], array $headers = [], $body = null)
 2. httpPost(string $url, array $queryParams = [], array $headers = [], $body = null)
