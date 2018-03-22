@@ -17,8 +17,8 @@ use Psr\Http\Message\RequestInterface;
 class JwtClientTest extends AbstractFrameworkTestCase
 {
     // Send these on any get request. Ye hath been warned.
-    const GET_REQUEST_QUERY_PARAMS = ['a' => 'b'];
     const TOKEN = 'my.tok.en';
+    private $GET_REQUEST_QUERY_PARAMS = ['a' => 'b'];
 
     /**
      * @var JwtClient
@@ -27,6 +27,7 @@ class JwtClientTest extends AbstractFrameworkTestCase
 
     protected function setUp()
     {
+        $testQueryParams = $this->GET_REQUEST_QUERY_PARAMS;
         $this->systemUnderTest = new JwtClientTestHelper(
             'example.com',
             self::TOKEN,
@@ -35,7 +36,7 @@ class JwtClientTest extends AbstractFrameworkTestCase
              * Fun little spy we're sneaking in to ensure we 'could' call Guzzle's send function with expected data.
              * {@see ClientTestHelper::send}
              */
-            $config = ['spy' => function (RequestInterface $request) {
+            $config = ['spy' => function (RequestInterface $request) use ($testQueryParams) {
                 $expectedHeaders = [
                     'Authorization',
                     'Content-Type',
@@ -53,7 +54,7 @@ class JwtClientTest extends AbstractFrameworkTestCase
 
                 if ($request->getMethod() === ClientInterface::HTTP_METHOD_GET) {
                     $queryParams = $request->getUri()->getQuery();
-                    $this->assertSame(http_build_query(self::GET_REQUEST_QUERY_PARAMS), $queryParams);
+                    $this->assertSame(http_build_query($testQueryParams), $queryParams);
                 }
             }]
         );
@@ -67,7 +68,7 @@ class JwtClientTest extends AbstractFrameworkTestCase
     public function testClientCanDoGetRequest()
     {
         $systemUnderTest = $this->systemUnderTest;
-        $systemUnderTest->httpGet('localhost', self::GET_REQUEST_QUERY_PARAMS);
+        $systemUnderTest->httpGet('localhost', $this->GET_REQUEST_QUERY_PARAMS);
     }
 
     public function testClientCanDoPostRequest()

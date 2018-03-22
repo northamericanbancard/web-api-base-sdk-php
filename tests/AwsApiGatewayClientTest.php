@@ -19,7 +19,7 @@ use Psr\Http\Message\RequestInterface;
 class AwsApiGatewayClientTest extends AbstractFrameworkTestCase
 {
     // Send these on any get request. Ye hath been warned.
-    const GET_REQUEST_QUERY_PARAMS = ['a' => 'b'];
+    private $GET_REQUEST_QUERY_PARAMS = ['a' => 'b'];
 
     /**
      * @var AwsApiGatewayClient
@@ -28,6 +28,7 @@ class AwsApiGatewayClientTest extends AbstractFrameworkTestCase
 
     protected function setUp()
     {
+        $testQueryParams = $this->GET_REQUEST_QUERY_PARAMS;
         $this->systemUnderTest = new AwsApiGatewayClientTestHelper(
             'example.com',
             new SignatureV4(),
@@ -37,7 +38,7 @@ class AwsApiGatewayClientTest extends AbstractFrameworkTestCase
              * Fun little spy we're sneaking in to ensure we 'could' call Guzzle's send function with expected data.
              * {@see ClientTestHelper::send}
              */
-            $config = ['spy' => function (RequestInterface $request) {
+            $config = ['spy' => function (RequestInterface $request) use ($testQueryParams) {
                 $expectedHeaders = [
                     'Authorization',
                     'X-Amz-Date',
@@ -55,7 +56,7 @@ class AwsApiGatewayClientTest extends AbstractFrameworkTestCase
 
                 if ($request->getMethod() === ClientInterface::HTTP_METHOD_GET) {
                     $queryParams = $request->getUri()->getQuery();
-                    $this->assertSame(http_build_query(self::GET_REQUEST_QUERY_PARAMS), $queryParams);
+                    $this->assertSame(http_build_query($testQueryParams), $queryParams);
                 }
             }]
         );
@@ -69,7 +70,7 @@ class AwsApiGatewayClientTest extends AbstractFrameworkTestCase
     public function testClientCanSignGetRequest()
     {
         $systemUnderTest = $this->systemUnderTest;
-        $systemUnderTest->httpGet('localhost', self::GET_REQUEST_QUERY_PARAMS);
+        $systemUnderTest->httpGet('localhost', $this->GET_REQUEST_QUERY_PARAMS);
     }
 
     public function testClientCanSignPostRequest()
