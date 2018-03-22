@@ -2,7 +2,7 @@
 default: install test;
 
 ######## DOCKER TESTING CONFIG ##########
-PROJECT_NAME=apigateway_generic_php_library
+PROJECT_NAME=web-api-base-sdk-php
 AWS_ACCESS_KEY_ID?='fake'
 AWS_SECRET_ACCESS_KEY?='fake'
 
