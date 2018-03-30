@@ -54,6 +54,21 @@ abstract class AbstractClient extends Client implements ClientInterface
     }
 
     /**
+     * A special little gift for this base SDK. If you ever come across the need where your `one` SDK is actually
+     * the same `path` spread across more than one host - you can swap hosts on run-time to allow you to aggregate
+     * results from the same SDK rather than creating new services over and over.
+     *
+     * NOTE: Because this class will most-likely be wrapped up by your actual SDK - you are going to have to
+     * have a function, such as `getClient`, that returns the current instance.
+     *
+     * @param string $newBaseUrl The new base-url - no trailing `/`.
+     */
+    public function swapBaseUrl($newBaseUrl)
+    {
+        $this->baseUrl = $newBaseUrl;
+    }
+
+    /**
      * Helper to create the final request object.
      *
      * @param string $method   The HTTP Method to use in the Request
