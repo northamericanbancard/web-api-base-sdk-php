@@ -7,10 +7,10 @@
  * @copyright   1992-2018 North American Bancard
  */
 
-namespace NAB\Tests;
+namespace NAB\Tests\ClientTestHelpers;
 
+use NAB\Tests\GuzzleSendOverrideTrait;
 use NAB\WebApiBaseSdk\AwsApiGatewayClient;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * Test helper that opens up the send functionality in a way that we can spy on it, rather than

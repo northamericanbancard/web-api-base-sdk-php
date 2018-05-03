@@ -9,12 +9,21 @@
 
 namespace NAB\Tests;
 
+use NAB\WebApiBaseSdk\AbstractClient;
+use NAB\WebApiBaseSdk\ClientInterface;
+use Psr\Http\Message\RequestInterface;
+
 /**
  * Central manager for the PHPUnit_Framework_TestCase. This allows for a single point-of-change for PHPUnit's interface
  * changes.
  */
 abstract class AbstractFrameworkTestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var AbstractClient
+     */
+    protected $systemUnderTest;
+
     /**
      * Centralizes the shenanigans of creating a class mock.
      *

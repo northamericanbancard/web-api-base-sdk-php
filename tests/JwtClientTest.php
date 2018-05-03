@@ -9,71 +9,60 @@
 
 namespace NAB\Tests;
 
+use NAB\Tests\ClientTestHelpers\JwtClientTestHelper;
 use NAB\WebApiBaseSdk\ClientInterface;
-use NAB\WebApiBaseSdk\JwtClient;
-use NAB\Tests\AbstractFrameworkTestCase;
-use Psr\Http\Message\RequestInterface;
 
-class JwtClientTest extends AbstractFrameworkTestCase
+class JwtClientTest extends AbstractClientTestBase
 {
-    // Send these on any get request. Ye hath been warned.
-    const TOKEN = 'my.tok.en';
-    private $GET_REQUEST_QUERY_PARAMS = ['a' => 'b'];
+    public function clientCanHandleRequestDataProvider()
+    {
+        return [
+            [
+                'system_under_test' => new JwtClientTestHelper(
+                    'example.com',
+                    self::TOKEN,
+                    'abc',
+                    $this->getGuzzleConfig(ClientInterface::HTTP_METHOD_GET)
+                ),
+                'system_under_test_method' => 'httpGet',
+                'query_data' => $this->GET_REQUEST_QUERY_PARAMS,
+            ],
+            [
+                'system_under_test' => new JwtClientTestHelper(
+                    'example.com',
+                    self::TOKEN,
+                    'abc',
+                    $this->getGuzzleConfig(ClientInterface::HTTP_METHOD_POST)
+                ),
+                'system_under_test_method' => 'httpPost',
+                'query_data' => [],
+            ],
+            [
+                'system_under_test' => new JwtClientTestHelper(
+                    'example.com',
+                    self::TOKEN,
+                    'abc',
+                    $this->getGuzzleConfig(ClientInterface::HTTP_METHOD_PUT)
+                ),
+                'system_under_test_method' => 'httpPut',
+                'query_data' => [],
+            ],
+        ];
+    }
 
     /**
-     * @var JwtClient
+     * Get the expected header keys that your client should have set on request.
+     *
+     * @return array
      */
-    private $systemUnderTest;
-
-    protected function setUp()
+    protected function getExpectedHeaderKeys()
     {
-        $testQueryParams = $this->GET_REQUEST_QUERY_PARAMS;
-        $this->systemUnderTest = new JwtClientTestHelper(
-            'example.com',
-            self::TOKEN,
-            'abc',
-            /**
-             * Fun little spy we're sneaking in to ensure we 'could' call Guzzle's send function with expected data.
-             * {@see ClientTestHelper::send}
-             */
-            $config = ['spy' => function (RequestInterface $request) use ($testQueryParams) {
-                $expectedHeaders = [
-                    'Authorization',
-                    'Content-Type',
-                    'x-api-key',
-                ];
+        $expectedHeaders = [
+            'Authorization',
+            'Content-Type',
+            'x-api-key',
+        ];
 
-                $actualHeaders = array_keys($request->getHeaders());
-
-                sort($actualHeaders);
-                sort($expectedHeaders);
-                $this->assertSame($expectedHeaders, $actualHeaders);
-
-                $this->assertSame('abc', $request->getHeader('x-api-key')[0]);
-                $this->assertSame('Bearer ' . self::TOKEN, $request->getHeader('Authorization')[0]);
-
-                if ($request->getMethod() === ClientInterface::HTTP_METHOD_GET) {
-                    $queryParams = $request->getUri()->getQuery();
-                    $this->assertSame(http_build_query($testQueryParams), $queryParams);
-                }
-            }]
-        );
-    }
-
-    protected function tearDown()
-    {
-        unset($this->systemUnderTest);
-    }
-
-    public function testClientCanDoGetRequest()
-    {
-        $systemUnderTest = $this->systemUnderTest;
-        $systemUnderTest->httpGet('localhost', $this->GET_REQUEST_QUERY_PARAMS);
-    }
-
-    public function testClientCanDoPostRequest()
-    {
-        $systemUnderTest = $this->systemUnderTest;
-        $systemUnderTest->httpPost('localhost');
+        return $expectedHeaders;
     }
 }

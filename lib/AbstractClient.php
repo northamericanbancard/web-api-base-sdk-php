@@ -10,6 +10,7 @@ namespace NAB\WebApiBaseSdk;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use NAB\WebApiBaseSdk\ClientInterface;
 
 /**
@@ -89,6 +90,8 @@ abstract class AbstractClient extends Client implements ClientInterface
      * @param mixed $body        The body of the post request
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException IFF HTTP_ERRORS are true on construct.
      */
     public function httpPost($path, array $queryParams = [], array $headers = [], $body = null)
     {
@@ -104,10 +107,29 @@ abstract class AbstractClient extends Client implements ClientInterface
      * @param mixed $body        The body of the post request
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException IFF HTTP_ERRORS are true on construct.
      */
-    public function httpGet($path, array $queryParams = [], array $headers = [], array $body = null)
+    public function httpGet($path, array $queryParams = [], array $headers = [], $body = null)
     {
         return $this->doSendRequest(self::HTTP_METHOD_GET, $path, $queryParams, $headers, $body);
+    }
+
+    /**
+     * Wrapper around Guzzle's sending process of a get request.
+     *
+     * @param string $path       The path to send the request to (no query params)
+     * @param array $queryParams Any query params to attach to the url
+     * @param array $headers     Extra headers to add to Guzzle's default
+     * @param mixed $body        The body of the post request
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException IFF HTTP_ERRORS are true on construct.
+     */
+    public function httpPut($path, array $queryParams = [], array $headers = [], $body = null)
+    {
+        return $this->doSendRequest(self::HTTP_METHOD_PUT, $path, $queryParams, $headers, $body);
     }
 
     /**
@@ -136,6 +158,8 @@ abstract class AbstractClient extends Client implements ClientInterface
      * @param mixed $body        The body of the post request
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException IFF HTTP_ERRORS are true on construct.
      */
     private function doSendRequest($method, $path, array $queryParams, array $headers, $body)
     {
@@ -147,6 +171,7 @@ abstract class AbstractClient extends Client implements ClientInterface
         $requestHeaders = array_merge($this->getHeaders(), $headers);
         $request = $this->createRequest($method, $endpoint, $requestHeaders, $body);
 
-        return $this->send($request);
+        $response = $this->send($request);
+        return $response;
     }
 }

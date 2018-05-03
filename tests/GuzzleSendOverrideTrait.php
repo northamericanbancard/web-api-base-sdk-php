@@ -17,7 +17,6 @@ use GuzzleHttp\ClientInterface;
  */
 trait GuzzleSendOverrideTrait
 {
-
     /**
      * Handle the 'sending' of the request.
      *

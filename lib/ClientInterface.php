@@ -18,6 +18,7 @@ interface ClientInterface
 {
     const HTTP_METHOD_POST = 'POST';
     const HTTP_METHOD_GET = 'GET';
+    const HTTP_METHOD_PUT = 'PUT';
 
     /**
      * Wrapper around Guzzle's sending process of a get request.
@@ -25,11 +26,11 @@ interface ClientInterface
      * @param string $path       The path to send the request to (no query params)
      * @param array $queryParams Any query params to attach to the url
      * @param array $headers     Extra headers to add to Guzzle's default
-     * @param mixed $body        The body of the post request
+     * @param mixed $body        The body of the get request
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function httpGet($path, array $queryParams = [], array $headers = [], array $body = null);
+    public function httpGet($path, array $queryParams = [], array $headers = [], $body = null);
 
     /**
      * Wrapper around Guzzle's sending process of a post request.
@@ -42,4 +43,16 @@ interface ClientInterface
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
     public function httpPost($path, array $queryParams = [], array $headers = [], $body = null);
+
+    /**
+     * Wrapper around Guzzle's sending process of a put request.
+     *
+     * @param string $path       The path to send the request to (no query params)
+     * @param array $queryParams Any query params to attach to the url
+     * @param array $headers     Extra headers to add to Guzzle's default
+     * @param mixed $body        The body of the put request
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function httpPut($path, array $queryParams = [], array $headers = [], $body = null);
 }
