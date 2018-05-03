@@ -30,6 +30,7 @@ The allowed calls you can make on the service are noted as:
 
 1. httpGet(string $url, array $queryParams = [], array $headers = [], $body = null)
 2. httpPost(string $url, array $queryParams = [], array $headers = [], $body = null)
+2. httpPut(string $url, array $queryParams = [], array $headers = [], $body = null)
 
 #### IAM Secured Endpoints
 
@@ -45,14 +46,11 @@ $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' =>
 
 **_NOTE_** The client services are an extension of `GuzzleHttp\Client`, and therefore returns an instance of
 `\Psr\Http\Message\ResponseInterface`. These classes do NOT throw exceptions on non-200 responses, but rather
-supress exceptions with the intent for you to retrieve error data from the status code and response body.
+suppress exceptions with the intent for you to retrieve error data from the status code and response body.
 
 #### JWT Secured Endpoints
 
 *_Note_*: JWT Tokens will exist in each request under the header `Authorization: Bearer` as `Authorization: Bearer <MY_TOKEN>`
-
-1. httpGet(string $url, array $queryParams = [], array $headers = [], $body = null)
-2. httpPost(string $url, array $queryParams = [], array $headers = [], $body = null)
 
 Example Calls:
 
@@ -63,10 +61,20 @@ $service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 
 $service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
 ```
 
-#### Unsecured Endpoints
+#### Basic Auth Secured Endpoints
 
-1. httpGet(string $url, array $queryParams = [], array $headers = [], $body = null)
-2. httpPost(string $url, array $queryParams = [], array $headers = [], $body = null)
+*_Note_*: Auth will exist in each request under the header `Authorization: Bearer` as `Authorization: Bearer <MY_HASH>`
+
+Example Calls:
+
+```php
+$service = new JwtClient('http://example.com', 'username', 'password', 'x-api-key'|null, [] /*optional guzzle config*/);
+ 
+$service->httpGet('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'])
+$service->httpPost('/some/path', ['foo' => 'bar', 'baz' => 'bing'], ['Accept' => 'application/json'], '{"a": "b"}')
+```
+
+#### Unsecured Endpoints
 
 Example Calls:
 
