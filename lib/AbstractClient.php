@@ -29,7 +29,8 @@ abstract class AbstractClient extends Client implements ClientInterface
     private $headers;
 
     /**
-     * Sets up a new Client implementation.
+     * Sets up a new Client implementation. We are being restrictive here for aid in debugging and control
+     * over guzzle changes as they change implementations.
      *
      * @param string $baseUrl The base URL, without trailing / or query params.
      * @param string $xApiKey An API key header (usually associated with AWS APIG)
@@ -45,12 +46,16 @@ abstract class AbstractClient extends Client implements ClientInterface
         }
 
         $headers = ['Content-Type' => 'application/json'];
+        if (isset($config['headers'])) {
+            $headers += $config['headers'];
+            unset($config['headers']);
+        }
+
         if ($xApiKey) {
             $headers['x-api-key'] = $xApiKey;
         }
 
         $this->headers = $headers;
-
         parent::__construct($config);
     }
 
