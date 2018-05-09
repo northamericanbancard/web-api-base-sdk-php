@@ -109,7 +109,7 @@ abstract class AbstractClient extends Client implements ClientInterface
      * @param string $path       The path to send the request to (no query params)
      * @param array $queryParams Any query params to attach to the url
      * @param array $headers     Extra headers to add to Guzzle's default
-     * @param mixed $body        The body of the post request
+     * @param mixed $body        The body of the get request
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      *
@@ -121,12 +121,12 @@ abstract class AbstractClient extends Client implements ClientInterface
     }
 
     /**
-     * Wrapper around Guzzle's sending process of a get request.
+     * Wrapper around Guzzle's sending process of a put request.
      *
      * @param string $path       The path to send the request to (no query params)
      * @param array $queryParams Any query params to attach to the url
      * @param array $headers     Extra headers to add to Guzzle's default
-     * @param mixed $body        The body of the post request
+     * @param mixed $body        The body of the put request
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      *
@@ -135,6 +135,23 @@ abstract class AbstractClient extends Client implements ClientInterface
     public function httpPut($path, array $queryParams = [], array $headers = [], $body = null)
     {
         return $this->doSendRequest(self::HTTP_METHOD_PUT, $path, $queryParams, $headers, $body);
+    }
+
+    /**
+     * Wrapper around Guzzle's sending process of a delete request.
+     *
+     * @param string $path       The path to send the request to (no query params)
+     * @param array $queryParams Any query params to attach to the url
+     * @param array $headers     Extra headers to add to Guzzle's default
+     * @param mixed $body        The body of the delete request
+     *
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException IFF HTTP_ERRORS are true on construct.
+     */
+    public function httpDelete($path, array $queryParams = [], array $headers = [], $body = null)
+    {
+        return $this->doSendRequest(self::HTTP_METHOD_DELETE, $path, $queryParams, $headers, $body);
     }
 
     /**

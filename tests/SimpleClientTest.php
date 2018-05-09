@@ -44,6 +44,15 @@ class SimpleClientTest extends AbstractClientTestBase
                 'system_under_test_method' => 'httpPut',
                 'query_data' => [],
             ],
+            [
+                'system_under_test' => new SimpleClientTestHelper(
+                    'example.com',
+                    'abc',
+                    $this->getGuzzleConfig(ClientInterface::HTTP_METHOD_DELETE)
+                ),
+                'system_under_test_method' => 'httpDelete',
+                'query_data' => [],
+            ],
         ];
     }
 

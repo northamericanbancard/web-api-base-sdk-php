@@ -52,6 +52,17 @@ class AwsApiGatewayClientTest extends AbstractClientTestBase
                 'system_under_test_method' => 'httpPut',
                 'query_data' => [],
             ],
+            [
+                'system_under_test' => new AwsApiGatewayClientTestHelper(
+                    'example.com',
+                    new SignatureV4(),
+                    new Credentials(null, null),
+                    $apiKey = 'abc',
+                    $this->getGuzzleConfig(ClientInterface::HTTP_METHOD_DELETE)
+                ),
+                'system_under_test_method' => 'httpDelete',
+                'query_data' => [],
+            ],
         ];
     }
 
